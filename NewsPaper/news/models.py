@@ -10,7 +10,7 @@ class Author(models.Model):
     def update_rating(self):
         postRat = self.post_set.aggregate(postRating=Sum('post_rating'))
         pRat = 0
-        if pRat: pRat += postRat.get('postRating')
+        if postRat.get('postRating'): pRat += postRat.get('postRating')
 
         commentRat = self.authorUser.comment_set.aggregate(commentRating=Sum('rating'))
         cRat = 0
