@@ -1,0 +1,42 @@
+a = User.objects.create_user('test1')
+b = User.objects.create_user('test2')
+Author.objects.create(authorUser=a)
+Author.objects.create(authorUser=b)
+Category.objects.create(name='C1')
+Category.objects.create(name='C2')
+Category.objects.create(name='C3')
+Category.objects.create(name='C4')
+Post.objects.create(author=Author.objects.get(pk=4), choice='PT', post_name='Post1', text='text1')
+Post.objects.create(author=Author.objects.get(pk=5), choice='PT', post_name='Post2', text='text2')
+Post.objects.create(author=Author.objects.get(pk=5), choice='NW', post_name='News1', text='text1')
+Post.objects.get(id=2).category.add(Category.objects.get(id=5))
+Post.objects.get(id=2).category.add(Category.objects.get(id=6))
+Post.objects.get(id=3).category.add(Category.objects.get(id=7))
+Post.objects.get(id=4).category.add(Category.objects.get(id=8))
+Comment.objects.create(post=Post.objects.get(id=2), user=Author.objects.get(pk=3).authorUser, text='comment1')
+Comment.objects.create(post=Post.objects.get(id=3), user=Author.objects.get(pk=4).authorUser, text='comment2')
+Comment.objects.create(post=Post.objects.get(id=4), user=Author.objects.get(pk=5).authorUser, text='comment3')
+Comment.objects.create(post=Post.objects.get(id=2), user=Author.objects.get(pk=5).authorUser, text='comment4')
+c = Comment.objects.all()
+c[1].like()
+c[2].like()
+c[3].dislike()
+c[4].dislike()
+p = Post.objects.all()
+p[1].like()
+p[2].dislike()
+p[3].like()
+a[3].update_rating()
+a[4].update_rating()
+a[5].update_rating()
+>>> for i in a.order_by('-author_rating')[:1]:
+...     i.authorUser
+...     i.author_rating
+>>> for i in p.order_by('-post_rating')[:1]:
+...     i.time_in
+...     i.author.authorUser
+...     i.post_rating
+...     i.post_name
+...     i.preview()
+Comment.objects.filter(post__id=1)
+Comment.objects.filter(post__id=1).values('time_in', 'user', 'rating', 'text')
