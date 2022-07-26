@@ -53,6 +53,10 @@ class Post(models.Model):
     def preview(self):
         return f'{self.text[:124]} ... Рейтинг {self.post_rating}'
 
+    def __str__(self):
+        return f'{self.text}\n' \
+               f'Рейтинг статьи: {self.post_rating}\n' \
+               f'Автор: {self.author.authorUser}'
 
 class PostCategory(models.Model):
     post_name = models.ForeignKey(Post, on_delete=models.CASCADE)
