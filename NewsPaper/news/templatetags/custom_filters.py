@@ -1,5 +1,6 @@
 from django import template
 
+
 register = template.Library()
 
 BAD_WORDS = "редиска жопа писька"
@@ -23,6 +24,6 @@ def censor(text):
     temp_text = text.split()
     for i, txt in enumerate(temp_text):
         if not is_int(txt) and not is_float(txt):
-            if txt.lower()[:-1] in BAD_WORDS:
+            if len(txt.lower()[:-1]) > 2 and txt.lower()[:-1] in BAD_WORDS:
                 temp_text[i] = f'{txt[0]}{"*" * (len(txt) - 1)}'
     return " ".join(temp_text)
