@@ -1,5 +1,5 @@
 import django.forms
-from django_filters import FilterSet, DateFilter, ModelMultipleChoiceFilter
+from django_filters import FilterSet, DateFilter, ModelMultipleChoiceFilter, CharFilter
 from .models import Post, Category
 
 
@@ -21,9 +21,11 @@ class NewsFilter(FilterSet):
         conjoined = True
     )
 
+    post_name = CharFilter(label='Заголовок содержит', field_name='post_name', lookup_expr='icontains')
     class Meta:
         model = Post
-        fields = {
-            'post_name': ['icontains'],
-        }
+        fields = ['post_name', 'category', 'time_in']
+        # fields = {
+        #     'post_name': ['icontains'],
+        # }х
 
